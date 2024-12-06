@@ -19,12 +19,11 @@ class Payment extends Model
         'qr_code_path',
     ];
 
-    // The duplicate payments() method should be removed.
-    // Here is the correct version of the payments() method:
+    
 
     public function payments()
     {
-        // This defines a one-to-many relationship, meaning one booking can have many payments.
+    
         return $this->hasMany(Payment::class);
     }
 }
