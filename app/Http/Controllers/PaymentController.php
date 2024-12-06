@@ -10,26 +10,26 @@ use Stripe\Stripe;
 
 class PaymentController extends Controller
 {
-    // Create Payment Intent with Stripe
+    
     public function createPaymentIntent(Booking $booking)
     {
-        // Set your Stripe secret key
+        
         Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
 
         try {
-            // Create Payment Intent for the booking
+            
             $paymentIntent = PaymentIntent::create([
-                'amount' => $booking->event->ticket_price * 100, // Convert to cents
+                'amount' => $booking->event->ticket_price * 100, 
                 'currency' => 'usd',
-                'metadata' => ['booking_id' => $booking->id], // Metadata to track the booking
+                'metadata' => ['booking_id' => $booking->id], 
             ]);
 
-            // Create a pending payment record in the database
+    
             $payment = Payment::create([
                 'booking_id' => $booking->id,
                 'user_id' => auth()->id(),
                 'amount' => $booking->event->ticket_price,
-                'payment_status' => 'pending', // Set payment status as 'pending'
+                'payment_status' => 'pending', 
                 'payment_method' => 'Stripe',
             ]);
 
